@@ -1,212 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stample</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Stample</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --glass-bg: rgba(255, 255, 255, 0.07);
-      --glass-border: rgba(255, 255, 255, 0.15);
-      --font-main: 'Outfit', sans-serif;
-      --accent: rgba(255, 255, 255, 0.3);
-    --font-main: 'Zalando Sans Expanded', sans-serif;
+
+<style>
+:root {
+  --font-main: 'Zalando Sans Expanded', sans-serif;
 }
-    body {
-      margin: 0;
-      height: 100vh;
-      background: radial-gradient(circle at top left, #000000 0%, #000 100%);
-      font-family: var(--font-main);
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      padding: 40px;
-      box-sizing: border-box;
-      overflow: hidden;
-    }
 
-    .input-container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      width: 260px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 20px;
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-    }
+body {
+  margin: 0;
+  height: 100vh;
+  background: #000;
+  font-family: var(--font-main);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 40px;
+  overflow: hidden;
+}
 
-    .input-container label {
-      font-weight: 600;
-      font-size: 13px;
-      letter-spacing: 0.5px;
-      opacity: 0.85;
-    }
+/* INPUT */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 260px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 20px;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
 
-    .input-container input {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: white;
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      outline: none;
-      transition: background 0.3s ease, border-color 0.3s ease;
-    }
+.input-container input {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+}
 
-    .input-container input:focus {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: rgba(255, 255, 255, 0.4);
-    }
-
+/* ===== CONTAINER (REAL WIDTH ANIMATION) ===== */
 .preview-container {
   position: absolute;
   bottom: 50px;
   right: 50px;
+
   display: flex;
   align-items: center;
   gap: 20px;
+
   padding: 20px 22px;
   border-radius: 30px;
 
-  backdrop-filter: blur(40px) saturate(220%) contrast(1.2);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
 
-  background: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, 0.05) 0%,
-      rgba(255, 255, 255, 0.08) 50%,
-      rgba(255, 255, 255, 0.03) 100%
-    );
-    
-
-  border: 1px solid rgba(255, 255, 255, 0.18);
-
+  backdrop-filter: blur(40px);
 
   box-shadow:
-    0 10px 50px rgba(0, 0, 0, 0.2),
-    inset 0 0 25px rgba(255, 255, 255, 0.05);
+    0 10px 50px rgba(0,0,0,0.25),
+    inset 0 0 25px rgba(255,255,255,0.05);
 
-  animation: glassShimmer 6s linear infinite;
+  width: 0px;
+  opacity: 0;
 
-  transition: all 0.4s ease;
+  overflow: hidden;
 
-  min-width: 450px;
+  transition:
+    width 0.6s ease,
+    opacity 0.4s ease;
 }
 
-@keyframes glassShimmer {
-  0% {
-    background-position: -200% -200%;
-  }
-  100% {
-    background-position: 200% 200%;
-  }
+/* OPEN STATE */
+.preview-container.show {
+  width: 450px;
+  opacity: 1;
 }
-    .album-cover {
-      width: 110px;
-      height: 110px;
-      border-radius: 20px;
-      object-fit: cover;
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-    }
 
-    .song-info {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 10px;
-    }
+/* ===== ALBUM ===== */
+.album-cover {
+  width: 110px;
+  height: 110px;
+  border-radius: 20px;
+  object-fit: cover;
 
-    .song-name {
-      font-weight: 700;
-      font-size: 18px;
-      letter-spacing: 0.4px;
-    }
+  transform: translateX(-40px) scale(0.6);
+  opacity: 0;
 
-    .artist-line {
-      font-size: 15px;
-      opacity: 0.9;
-    }
+  transition:
+    transform 1s cubic-bezier(.2,.8,.2,1),
+    opacity 0.4s ease;
 
-    .artist-line span.by {
-      font-weight: 500;
-      opacity: 0.8;
-      margin-right: 4px;
-    }
+  transform-style: preserve-3d;
 
-    .release-year {
-      font-size: 13.5px;
-      opacity: 0.7;
-      letter-spacing: 0.3px;
-    }
-  </style>
+  animation: rotate3d 7s ease-in-out infinite;
+
+  box-shadow:
+    0 30px 70px rgba(0,0,0,0.55),
+    inset 0 1px 1px rgba(255,255,255,0.25);
+}
+
+/* album enters AFTER container opens */
+.preview-container.show .album-cover {
+  transform: translateX(0px) scale(1);
+  opacity: 1;
+  transition-delay: 0.35s;
+}
+
+/* ===== TEXT ===== */
+.song-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  transform: translateX(-30px);
+  opacity: 0;
+
+  transition:
+    transform 0.6s ease,
+    opacity 0.4s ease;
+}
+
+/* text comes AFTER album */
+.preview-container.show .song-info {
+  transform: translateX(0px);
+  opacity: 1;
+  transition-delay: 0.3s;
+}
+
+.song-name { font-size: 18px; font-weight: 700; }
+.artist-line { font-size: 15px; opacity: 0.9; }
+.release-year { font-size: 13px; opacity: 0.7; }
+
+/* ===== 3D ROTATION (UNCHANGED) ===== */
+@keyframes rotate3d {
+  0% { transform: perspective(900px) rotateY(-12deg) rotateX(6deg); }
+  25% { transform: perspective(900px) rotateY(10deg) rotateX(-6deg); }
+  50% { transform: perspective(900px) rotateY(14deg) rotateX(10deg); }
+  75% { transform: perspective(900px) rotateY(-8deg) rotateX(-10deg); }
+  100% { transform: perspective(900px) rotateY(-12deg) rotateX(6deg); }
+}
+</style>
 </head>
+
 <body>
-  <div class="input-container">
-    <label for="imageUpload">Album Cover</label>
-    <input type="file" id="imageUpload" accept="image/*">
 
-    <label for="songName">Song Name</label>
-    <input type="text" id="songName" placeholder="Enter song name">
+<div class="input-container">
+  <label>Album Cover</label>
+  <input type="file" id="imageUpload" accept="image/*">
 
-    <label for="songArtist">Artist Name</label>
-    <input type="text" id="songArtist" placeholder="Enter artist name">
+  <label>Song Name</label>
+  <input type="text" id="songName">
 
-    <label for="releaseYear">Release Year</label>
-    <input type="text" id="releaseYear" placeholder="Enter year">
+  <label>Artist Name</label>
+  <input type="text" id="songArtist">
+
+  <label>Release Year</label>
+  <input type="text" id="releaseYear">
+</div>
+
+<div class="preview-container" id="preview">
+  <img id="albumPreview" class="album-cover">
+
+  <div class="song-info">
+    <div class="song-name" id="previewSongName">Song Name</div>
+    <div class="artist-line">by <span id="previewArtist">Artist Name</span></div>
+    <div class="release-year" id="previewYear">Year</div>
   </div>
+</div>
 
-  <div class="preview-container" id="previewContainer">
-    <img id="albumPreview" class="album-cover" src="" alt="Album Cover Preview">
-    <div class="song-info">
-      <div class="song-name" id="previewSongName">Song Name</div>
-      <div class="artist-line">
-        <span class="by">by</span><span id="previewArtist">Artist Name</span>
-      </div>
-      <div class="release-year" id="previewYear">Year</div>
-    </div>
-  </div>
+<script>
+const preview = document.getElementById("preview");
 
-  <script>
-    const imageUpload = document.getElementById('imageUpload');
-    const songName = document.getElementById('songName');
-    const songArtist = document.getElementById('songArtist');
-    const releaseYear = document.getElementById('releaseYear');
+const imageUpload = document.getElementById('imageUpload');
+const songName = document.getElementById('songName');
+const songArtist = document.getElementById('songArtist');
+const releaseYear = document.getElementById('releaseYear');
 
-    const albumPreview = document.getElementById('albumPreview');
-    const previewSongName = document.getElementById('previewSongName');
-    const previewArtist = document.getElementById('previewArtist');
-    const previewYear = document.getElementById('previewYear');
+const albumPreview = document.getElementById('albumPreview');
+const previewSongName = document.getElementById('previewSongName');
+const previewArtist = document.getElementById('previewArtist');
+const previewYear = document.getElementById('previewYear');
 
-    imageUpload.addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          albumPreview.src = event.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
+/* image */
+imageUpload.addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
-    songName.addEventListener('input', () => {
-      previewSongName.textContent = songName.value || "Song Name";
-    });
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    albumPreview.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+});
 
-    songArtist.addEventListener('input', () => {
-      previewArtist.textContent = songArtist.value || "Artist Name";
-    });
+/* text */
+songName.addEventListener('input', () => {
+  previewSongName.textContent = songName.value || "Song Name";
+});
 
-    releaseYear.addEventListener('input', () => {
-      previewYear.textContent = releaseYear.value || "Year";
-    });
-  </script>
+songArtist.addEventListener('input', () => {
+  previewArtist.textContent = songArtist.value || "Artist Name";
+});
+
+releaseYear.addEventListener('input', () => {
+  previewYear.textContent = releaseYear.value || "Year";
+});
+
+/* controls */
+document.addEventListener("keydown", (e) => {
+  if (e.key === "1") {
+    preview.classList.remove("show");
+  }
+
+  if (e.key === "2") {
+    preview.classList.add("show");
+  }
+});
+</script>
+
 </body>
 </html>
